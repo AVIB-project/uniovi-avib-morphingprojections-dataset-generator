@@ -1,0 +1,19 @@
+cachetools==5.3.3
+chardet==5.2.0
+colorama==0.4.6
+distlib==0.3.8
+filelock==3.13.1
+numpy==1.24.4
+packaging==23.2
+pandas==2.0.3
+platformdirs==4.2.0
+pluggy==1.4.0
+pyproject-api==1.6.1
+python-dateutil==2.9.0
+pytz==2024.1
+six==1.16.0
+tomli==2.0.1
+tox==4.13.0
+tzdata==2024.1
+-e git+https://gsdpi@dev.azure.com/gsdpi/avib/_git/uniovi-avib-morphingprojections-dataset-generator@4539893d1e356bb0db8d936b3c1bbea1ab1b2004#egg=uniovi_avib_morphingprojections_dataset_generator
+virtualenv==20.25.1
