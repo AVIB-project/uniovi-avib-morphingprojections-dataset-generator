@@ -16,7 +16,11 @@
 
 > Uniovi AVIB Morphing Projection Dataset Generator.
 
-A longer description of your project goes here...
+A Python function to generate the three resource files to be ingested
+
+- datamatrix.csv
+- sample_annotations.csv
+- attribute_annotations.csv
 
 
 <!-- pyscaffold-notes -->

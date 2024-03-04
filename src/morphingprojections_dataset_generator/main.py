@@ -24,6 +24,7 @@ import argparse
 import logging
 import sys
 import random
+import string
 
 import pandas as pd
 
@@ -36,11 +37,22 @@ __license__ = "MIT"
 _logger = logging.getLogger(__name__)
 
 
-# ---- Python API ----
-def generator(num_samples, num_attributes, num_sample_annotations, num_attribute_annotations):
-    _logger.info(num_samples)
-    _logger.info(num_attributes)
+def get_random_string(length):
+    result_str = ''.join(random.choice(string.ascii_letters) for i in range(length))    
 
+    return result_str
+
+def get_random_enumeration(enumeration):
+    items = enumeration.split("|")
+    result_str = items[random.randint(0, len(items)-1)]
+    
+    return result_str
+
+def get_random_number():
+    return random.random()
+
+# ---- Python API ----
+def generator(num_samples, num_attributes, configuration_file, num_sample_annotations, num_attribute_annotations):
     # Generate random datamatrix dataframe
     attributes = []    
     for attribute_index in range(1, num_attributes + 1):  
@@ -62,16 +74,26 @@ def generator(num_samples, num_attributes, num_sample_annotations, num_attribute
 
     datamatrix.to_csv('./export/datamatrix.csv', sep=',', index=True, encoding='utf-8')
 
+    # open configuration file
+    configuration = pd.read_csv(configuration_file)
+    print(configuration)
+    
     # Generate random sample annotion dataframe
+    sample_configuration = configuration.query('group == "sample"')
     sample_annotations = []   
-    for sample_annotation_index in range(1, num_sample_annotations + 1): 
-        sample_annotations.append("SA" + str(sample_annotation_index)) 
+    for sample_annotation_index in range(0, num_sample_annotations):
+        sample_annotations.append(sample_configuration.iloc[sample_annotation_index][0]) 
     
     sample_annotations_list = [] 
-    for sample_index in range(1, num_samples + 1):
+    for sample_index in range(0, num_samples):
         sample_annotation_values = []
-        for sample_annotation_index in range(1, num_sample_annotations + 1): 
-            sample_annotation_values.append(random.random())
+        for sample_annotation_index in range(0, num_sample_annotations): 
+            if (sample_configuration.iloc[sample_annotation_index]["type"] == "enumeration"):
+                sample_annotation_values.append(get_random_enumeration(sample_configuration.iloc[sample_annotation_index]["values"]))
+            elif (sample_configuration.iloc[sample_annotation_index]["type"] == "number"):
+                sample_annotation_values.append(get_random_number())
+            else:
+                sample_annotation_values.append(get_random_string(8))
         
         sample_annotations_list.append(tuple(sample_annotation_values))
 
@@ -82,15 +104,21 @@ def generator(num_samples, num_attributes, num_sample_annotations, num_attribute
     sample_annotations.to_csv('./export/sample_annotations.csv', sep=',', index=False, encoding='utf-8')
 
     # Generate random attribute annotion dataframe
+    attribute_configuration = configuration.query('group == "attribute"')
     attribute_annotations = []   
-    for attribute_annotation_index in range(1, num_attribute_annotations + 1): 
-        attribute_annotations.append("AA" + str(attribute_annotation_index)) 
-    
+    for attribute_annotation_index in range(0, num_attribute_annotations): 
+        attribute_annotations.append(attribute_configuration.iloc[attribute_annotation_index][0]) 
+
     attribute_annotations_list = [] 
-    for attribute_index in range(1, num_attributes + 1):
+    for attribute_index in range(0, num_attributes):
         attribute_annotation_values = []
-        for attribute_annotation_index in range(1, num_attribute_annotations + 1): 
-            attribute_annotation_values.append(random.random())
+        for attribute_annotation_index in range(0, num_attribute_annotations): 
+            if (attribute_configuration.iloc[attribute_annotation_index]["type"] == "enumeration"):
+                attribute_annotation_values.append(get_random_enumeration(attribute_configuration.iloc[attribute_annotation_index]["values"]))
+            elif (attribute_configuration.iloc[attribute_annotation_index]["type"] == "number"):
+                attribute_annotation_values.append(get_random_number())
+            else:
+                attribute_annotation_values.append(get_random_string(8))
         
         attribute_annotations_list.append(tuple(attribute_annotation_values))
 
@@ -138,6 +166,12 @@ def parse_args(args):
         type=int,
         metavar="INT"
     )
+    parser.add_argument(
+        "--configuration_file",
+        dest="configuration_file",
+        help="Configuration file",
+        default='./import/configuration.csv'
+    )    
     parser.add_argument(
         "--num_sample_annotations",
         dest="num_sample_annotations",
@@ -199,7 +233,7 @@ def main(args):
     setup_logging(args.loglevel)
 
     _logger.debug("Starting calculations...")
-    generator(args.num_samples, args.num_attributes, args.num_sample_annotations, args.num_attribute_annotations)    
+    generator(args.num_samples, args.num_attributes, args.configuration_file, args.num_sample_annotations, args.num_attribute_annotations)    
     _logger.info("Script ends here")
 
 
