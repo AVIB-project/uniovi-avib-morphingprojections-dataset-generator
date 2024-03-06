@@ -90,7 +90,7 @@ def generator(num_samples, num_attributes, configuration_file, num_sample_annota
         for sample_annotation_index in range(0, num_sample_annotations): 
             if (sample_configuration.iloc[sample_annotation_index]["type"] == "enumeration"):
                 sample_annotation_values.append(get_random_enumeration(sample_configuration.iloc[sample_annotation_index]["values"]))
-            elif (sample_configuration.iloc[sample_annotation_index]["type"] == "number"):
+            elif (sample_configuration.iloc[sample_annotation_index]["type"] == "numeric"):
                 sample_annotation_values.append(get_random_number())
             else:
                 sample_annotation_values.append(get_random_string(8))
@@ -115,7 +115,7 @@ def generator(num_samples, num_attributes, configuration_file, num_sample_annota
         for attribute_annotation_index in range(0, num_attribute_annotations): 
             if (attribute_configuration.iloc[attribute_annotation_index]["type"] == "enumeration"):
                 attribute_annotation_values.append(get_random_enumeration(attribute_configuration.iloc[attribute_annotation_index]["values"]))
-            elif (attribute_configuration.iloc[attribute_annotation_index]["type"] == "number"):
+            elif (attribute_configuration.iloc[attribute_annotation_index]["type"] == "numeric"):
                 attribute_annotation_values.append(get_random_number())
             else:
                 attribute_annotation_values.append(get_random_string(8))
