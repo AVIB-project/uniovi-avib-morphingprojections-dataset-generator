@@ -1,7 +1,9 @@
-name,description,group,type,colorized,mandatory,required,label,values
-SA1,Sample Annotation 1,sample,enumeration,true,true,true,us#Sample Annotation 1|es#Anotación Muestra 1,V1_SA1|V2_SA1|V3_SA1
-SA2,Sample Annotation 2,sample,string,false,true,true,us#Sample Annotation 2|es#Anotación Muestra 2,
-SA3,Sample Annotation 3,sample,enumeration,false,true,true,us#Sample Annotation 3|es#Anotación Muestra 3,V1_SA3|V2_SA3
-SA4,Sample Annotation 4,sample,numeric,false,true,true,us#Sample Annotation 4|es#Anotación Muestra 4,
-AA1,Attribute Annotation 1,attribute,enumeration,true,true,true,us#Attribute Annotation 1|es#Anotación Atributo 1,V1_AA1|V2_AA1
-AA2,Attribute Annotation 2,attribute,enumeration,false,true,true,us#Attribute Annotation 2|es#Anotación Atributo 2,V1_AA2|V2_AA2|V3_AA2|V4_AA2
+group,name,label,description,space,precalculated,projected_by_annotation,projection,type,colorized,required,values
+sample,SA1,us#Sample Annotation 1|es#Anotación Muestra 1,Sample Annotation 1,,false,,,enumeration,true,true,V1_SA1|V2_SA1|V3_SA1
+sample,SA2,us#Sample Annotation 2|es#Anotación Muestra 2,Sample Annotation 2,,false,,,string,false,true,
+sample,SA3,us#Sample Annotation 3|es#Anotación Muestra 3,Sample Annotation 3,,false,,,enumeration,false,true,V1_SA3|V2_SA3
+sample,SA4,us#Sample Annotation 4|es#Anotación Muestra 4,Sample Annotation 4,,false,,,numeric,false,true,
+attribute,AA1,us#Attribute Annotation 1|es#Anotación Atributo 1,Attribute Annotation 1,,false,,,enumeration,true,true,V1_AA1|V2_AA1
+attribute,AA2,us#Attribute Annotation 2|es#Anotación Atributo 2,Attribute Annotation 2,,false,,,enumeration,false,true,V1_AA2|V2_AA2|V3_AA2|V4_AA2
+projection,PP,us#Primal Projection 2|es#Proyección Primal,Primal Projection,primal,false,SA1,,numeric,false,true,
+projection,DP,us#Dual Projection 2|es#Proyección Dual,Dual Projection,dual,false,,,numeric,false,true,
